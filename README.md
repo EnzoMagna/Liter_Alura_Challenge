@@ -4,12 +4,10 @@ Entrega del alumno **MAGNANI Enzo Agustín** para el Challenge del proyecto **ON
 
 ## 🧩 Descripción
 
-**LiterAlura** es una aplicación desarrollada con **Spring Boot** que permite realizar consultas a la API de **Gutendex**, una base de datos abierta de libros del proyecto Gutenberg.
+**LiterAlura** es una aplicación desarrollada con **Spring Boot** que permite realizar consultas a la API de **Gutendex**, una base de datos abierta de libros del proyecto Gutendex.
 
 La aplicación permite:
-- Buscar libros por título o autor.
-- Consultar detalles como idioma, número de descargas y autores.
-- Almacenar y gestionar resultados localmente (opcional según implementación).
+TBA.
 
 ## 🛠️ Tecnologías utilizadas
 
