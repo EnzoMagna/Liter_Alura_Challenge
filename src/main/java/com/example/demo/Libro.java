@@ -13,14 +13,18 @@ public class Libro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty("id")
+    @Column(unique = true)
+    private Long gutendexId;
+
     private String title;
 
     @JsonProperty("authors")
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     private List<Autor> autores;
 
     @JsonProperty("languages")
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> idiomas;
 
     @JsonProperty("download_count")
@@ -56,6 +60,14 @@ public class Libro {
 
     public void setDescargas(Long descargas) {
         this.descargas = descargas;
+    }
+
+    public Long getGutendexId() {
+        return gutendexId;
+    }
+
+    public void setGutendexId(Long gutendexId) {
+        this.gutendexId = gutendexId;
     }
 
     @Override

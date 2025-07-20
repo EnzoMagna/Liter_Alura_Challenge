@@ -35,6 +35,7 @@ public class Menu {
                     "3- Listar autores registrados\n" +
                     "4- Listar autores vivos en determinado año\n" +
                     "5- Listar libros por idioma\n" +
+                    "6 -Truncar data de libros/autores registrados(DEBUG)\n" +
                     "0- SALIR");
             eleccion = sc.nextLine();
             switch (eleccion) {
@@ -44,7 +45,9 @@ public class Menu {
                 case "2":
                     mostrarLibrosListados();
                     break;
-
+                case "6":
+                    eliminarDatosTablas();
+                    break;
                 case "0":
                     break;
             }
@@ -62,11 +65,24 @@ public class Menu {
             String devolucion = consultaAPI.consultaDeAPI(libroBuscado);
             //Busqueda de solo el primer resultado en el array de Libros
             JsonNode jsonCompleto = mapper.readTree(devolucion);
-            JsonNode primerLibro = jsonCompleto.get("results").get(0);
+            JsonNode results = jsonCompleto.get("results");
 
 //            Conversion a class Libro con el servicio escrito en LibroService
-            Libro libroEncontrado = libroService.convertirLibro(String.valueOf(primerLibro));
-            libroRepository.save(libroEncontrado);
+            if (results==null || !results.elements().hasNext()) {
+                System.out.println("No se ha encontrado un libro con ese nombre, intente nuevamente");
+            } else {
+                JsonNode primerLibro = jsonCompleto.get("results").get(0);
+                Libro libroEncontrado = libroService.convertirLibro(String.valueOf(primerLibro));
+
+                if (libroRepository.existsByGutendexId(libroEncontrado.getGutendexId()))
+                {
+                    System.out.println("El libro ya esta en el registro");
+                } else {
+                    libroRepository.save(libroEncontrado);
+                }
+            }
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (Exception e) {
@@ -75,6 +91,11 @@ public class Menu {
     }
 
     public void mostrarLibrosListados() {
-        System.out.println(libroRepository.findAll());
+libroRepository.findAll().forEach(System.out::println);    }
+
+
+    private void eliminarDatosTablas() {
+        libroRepository.deleteAll();
     }
+
 }
