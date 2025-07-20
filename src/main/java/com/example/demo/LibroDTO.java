@@ -1,26 +1,17 @@
 package com.example.demo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.example.demo.Autor;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 
 import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-@Entity
-public class Libro {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class LibroDTO {
     private String title;
 
     @JsonProperty("authors")
-    @ManyToMany
     private List<Autor> autores;
 
     @JsonProperty("languages")
-    @ElementCollection
     private List<String> idiomas;
 
     @JsonProperty("download_count")
@@ -56,16 +47,5 @@ public class Libro {
 
     public void setDescargas(Long descargas) {
         this.descargas = descargas;
-    }
-
-    @Override
-    public String toString() {
-        return "Libro{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", autores=" + autores +
-                ", idiomas=" + idiomas +
-                ", descargas=" + descargas +
-                '}';
     }
 }
