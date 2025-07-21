@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,11 +13,17 @@ public class Autor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty("name")
     private String nombre;
+
+    @JsonProperty("birth_year")
     private Long annoNacimiento;
+
+    @JsonProperty("death_year")
     private Long annoMuerte;
 
-    @ManyToMany(mappedBy = "autores")
+
+    @OneToMany(mappedBy = "autores",fetch = FetchType.EAGER)
     private List<Libro> libros;
 
 
@@ -44,5 +51,13 @@ public class Autor {
 
     public void setAnnoMuerte(Long annoMuerte) {
         this.annoMuerte = annoMuerte;
+    }
+
+    @Override
+    public String toString() {
+        return "Autor{ " + nombre + '\'' + " ------ " +
+                 annoNacimiento + "-" +
+                annoMuerte +
+                '}';
     }
 }

@@ -20,12 +20,11 @@ public class Libro {
     private String title;
 
     @JsonProperty("authors")
-    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-    private List<Autor> autores;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Autor autores;
 
     @JsonProperty("languages")
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> idiomas;
+    private String idiomas;
 
     @JsonProperty("download_count")
     private Long descargas;
@@ -38,19 +37,19 @@ public class Libro {
         this.title = title;
     }
 
-    public List<Autor> getAutores() {
+    public Autor getAutores() {
         return autores;
     }
 
-    public void setAutores(List<Autor> autores) {
+    public void setAutores(Autor autores) {
         this.autores = autores;
     }
 
-    public List<String> getIdiomas() {
+    public String getIdiomas() {
         return idiomas;
     }
 
-    public void setIdiomas(List<String> idiomas) {
+    public void setIdiomas(String idiomas) {
         this.idiomas = idiomas;
     }
 
@@ -75,7 +74,7 @@ public class Libro {
         return "Libro{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", autores=" + autores +
+                ", autores=" + autores.getNombre() +
                 ", idiomas=" + idiomas +
                 ", descargas=" + descargas +
                 '}';
